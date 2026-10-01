@@ -1,0 +1,1 @@
+{"expo":{"name":"Умножайка","slug":"umnojayka","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"automatic","scheme":"umnojayka","android":{"package":"com.umnojayka.app","adaptiveIcon":{"backgroundColor":"#6750A4"}},"plugins":["expo-router","expo-audio"],"experiments":{"typedRoutes":true},"splash":{"backgroundColor":"#6750A4","resizeMode":"contain"}}}
