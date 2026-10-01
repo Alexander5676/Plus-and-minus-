@@ -1,0 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { achievements, initialProfile, initialProgress, initialSettings } from '../data/content';
+import { Achievement, AppSettings, Progress, QuestionStats, UserProfile } from '../types';
+const keys={onboarding:'@umnojayka/onboarding',profile:'@umnojayka/profile',progress:'@umnojayka/progress',settings:'@umnojayka/settings',stats:'@umnojayka/question_stats',achievements:'@umnojayka/achievements'} as const;
+async function read<T>(key:string,fallback:T):Promise<T>{try{const raw=await AsyncStorage.getItem(key); return raw?JSON.parse(raw) as T:fallback;}catch{return fallback}}
+export const storage={keys, read, async load(){return {profile:await read<UserProfile>(keys.profile,initialProfile),progress:await read<Progress>(keys.progress,initialProgress),settings:await read<AppSettings>(keys.settings,initialSettings),stats:await read<Record<string,QuestionStats>>(keys.stats,{}),achievements:await read<Achievement[]>(keys.achievements,achievements)}}, async save(key:keyof typeof keys,value:unknown){try{await AsyncStorage.setItem(keys[key],JSON.stringify(value));}catch{/* storage failure is non-fatal */}}, async onboarded(){return (await read<boolean>(keys.onboarding,false))===true}, async completeOnboarding(){await this.save('onboarding',true)}};
